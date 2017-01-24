@@ -10,7 +10,6 @@ public class QueryTemplates {
             + " count(CASE WHEN v.bootable = 1 THEN 1 END) as bootableVolumes,"
             + " count(CASE WHEN v.encrypted = 1 THEN 1 END) as encryptedVolumes,"
             + " count(CASE WHEN v.encrypted = 0 THEN 1 END) as plaintextVolumes,"
-            + " count(CASE WHEN v.multiattach = 1 THEN 1 END) as withMultiAttach,"
             + " (select count(b.id) from backups b where b.deleted = 0 and b.project_id=v.project_id) as totalSnapshots,"
             + " (CASE when (@volumeLimit\\:=(select hard_limit from quotas q where q.project_id=v.project_id and q.resource='volumes' and q.deleted=0))"
             + " then @volumeLimit else"
@@ -26,5 +25,20 @@ public class QueryTemplates {
             + " from volumes v where v.deleted = 0 group by v.project_id)"
             + " A where A.%s like ?1 ORDER BY A.%s %s limit %s, %s";
 
-    public static final String ACCOUNT_SUMMARY_RESULTS = "select count(distinct v.project_id) as totalResults from volumes v where v.deleted = 0 and v.%s like ?1";
+    
+    public static final String ACCOUNT_SUMMARY_RESULTS = "select count(v.project_id) as totalResults from volumes v where v.deleted = 0 and v.%s like ?1";
+    
+    public static final String VOLUMES = "select v.id,v.project_id,v.size,v.snapshot_id,v.status,v.bootable,v.encrypted,"
+            + "COALESCE((select vt.name from volume_types vt where vt.id=v.volume_type_id),'standard') as volume_type,"
+            + "v.created_at,v.updated_at,v.scheduled_at,v.launched_at,v.terminated_at from volumes v where v.deleted = 0";
+    
+    public static final String VOLUMES_COUNT = "select count(v.id) as totalResults from volumes v where v.deleted = 0";
+
+    public static final String SNAPSHOTS = "select b.id,b.volume_id,b.project_id,b.size,b.status,b.encrypted,"
+            + "b.fail_reason,b.created_at,b.updated_at from backups b where b.deleted = 0";
+    
+    public static final String SNAPSHOTS_COUNT = "select count(b.id) as totalResults from backups b where b.deleted = 0";
+    
+    
+    
 }

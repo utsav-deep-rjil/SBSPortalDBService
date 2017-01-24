@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.hibernate.HibernateException;
 
-import com.google.gson.Gson;
 import com.jcs.sbs.common.ExcelReader;
+import com.jcs.sbs.common.ServiceUtil;
 import com.jcs.sbs.dao.VolumeDao;
 import com.jcs.sbs.dao.impl.VolumeDaoImpl;
 import com.jcs.sbs.models.AccountType;
@@ -28,7 +28,7 @@ public class AccountServiceImpl implements CommonService {
         Map<String, AccountType> mappdedAccount = ExcelReader.getExcelAccountType();
         List<AccountSummaryExtended> extendedResult = new ArrayList<AccountSummaryExtended>();
         for (AccountSummaryResult accountSummary : queryResult) {
-            AccountType accountType = mappdedAccount.get(accountSummary.getProject_id());
+            AccountType accountType = mappdedAccount.get(ServiceUtil.removeLeadingZeroes(accountSummary.getProject_id()));
             if (accountType == null) {
                 accountType = new AccountType();
                 accountType.setBillingType("Internal");
@@ -36,12 +36,6 @@ public class AccountServiceImpl implements CommonService {
             AccountSummaryExtended extended = new AccountSummaryExtended(accountSummary, accountType.getBillingType());
             extendedResult.add(extended);
         }
-        Gson gson = new Gson();
-        // ExcelReader.getExcelData("/home/utsav/Downloads/Production_Accounts_PMs_20160923.xlsx");
-        /*
-         * for(Object obj : result){ String volume = gson.toJson(obj);
-         * System.out.println(volume); }
-         */
         return extendedResult;
 
     }

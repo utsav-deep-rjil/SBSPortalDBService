@@ -1,7 +1,5 @@
 package com.jcs.sbs.common;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,10 +15,15 @@ import com.jcs.sbs.models.AccountType;
 
 public class ExcelReader {
 
+    private static Map<String, AccountType> result = null;
+
     public static Map<String, AccountType> getExcelAccountType() {
-        Map<String, AccountType> result = new HashMap<String, AccountType>();
+        if (result != null) {
+            return result;
+        }
+        result = new HashMap<String, AccountType>();
         try {
-            InputStream file = ClassLoader.getSystemResourceAsStream("Production_Accounts_PMs.xlsx");
+            InputStream file = ExcelReader.class.getClassLoader().getResourceAsStream("Production_Accounts_PMs.xlsx");
 
             // Create Workbook instance holding reference to .xlsx file
             XSSFWorkbook workbook = new XSSFWorkbook(file);
@@ -60,6 +63,7 @@ public class ExcelReader {
                 }
             }
             file.close();
+            workbook.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

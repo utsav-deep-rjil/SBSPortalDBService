@@ -7,12 +7,12 @@ import javax.persistence.Column;
 
 public class ServiceUtil {
 
-    public static String getColumnName(Class theClass, String fieldName){
+    public static String getColumnName(Class theClass, String fieldName) {
         try {
-            Field field = theClass.getDeclaredField(fieldName); 
+            Field field = theClass.getDeclaredField(fieldName);
             Annotation annotation = field.getAnnotation(Column.class);
 
-            if(annotation instanceof Column){
+            if (annotation instanceof Column) {
                 Column column = (Column) annotation;
                 return column.name();
             }
@@ -24,4 +24,11 @@ public class ServiceUtil {
         }
         return null;
     };
+
+    public static String removeLeadingZeroes(String str) {
+        int leadingZeroes;
+        for (leadingZeroes = 0; leadingZeroes < str.length() && str.charAt(leadingZeroes) == '0'; leadingZeroes++)
+            ;
+        return str.substring(leadingZeroes);
+    }
 }

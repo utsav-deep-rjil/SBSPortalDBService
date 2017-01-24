@@ -16,7 +16,6 @@ public class AccountSummaryResult {
 	private int encryptedVolumes;
 	private int bootableVolumes;
 	private int plaintextVolumes;
-	private int withMultiAttach;
 	private int totalSnapshots;
 	private int volumeLimit;
 	private int gbLimit;
@@ -40,7 +39,7 @@ public class AccountSummaryResult {
 
     public AccountSummaryResult(String project_id, int totalSize, int totalVolumes, int stdVolumesGB, int ssdVolumesGB,
             int stdVolumes, int ssdVolumes, int encryptedVolumes, int bootableVolumes, int plaintextVolumes,
-            int withMultiAttach, int totalSnapshots, int volumeLimit, int gbLimit, int snapshotLimit,
+            int totalSnapshots, int volumeLimit, int gbLimit, int snapshotLimit,
             int perVolumeGBLimit) {
         super();
         this.project_id = project_id;
@@ -53,7 +52,6 @@ public class AccountSummaryResult {
         this.encryptedVolumes = encryptedVolumes;
         this.bootableVolumes = bootableVolumes;
         this.plaintextVolumes = plaintextVolumes;
-        this.withMultiAttach = withMultiAttach;
         this.totalSnapshots = totalSnapshots;
         this.volumeLimit = volumeLimit;
         this.gbLimit = gbLimit;
@@ -73,7 +71,6 @@ public class AccountSummaryResult {
         this.encryptedVolumes = that.encryptedVolumes;
         this.bootableVolumes = that.bootableVolumes;
         this.plaintextVolumes = that.plaintextVolumes;
-        this.withMultiAttach = that.withMultiAttach;
         this.totalSnapshots = that.totalSnapshots;
         this.volumeLimit = that.volumeLimit;
         this.gbLimit = that.gbLimit;
@@ -141,12 +138,6 @@ public class AccountSummaryResult {
     public void setPlaintextVolumes(int plaintextVolumes) {
         this.plaintextVolumes = plaintextVolumes;
     }
-    public int getWithMultiAttach() {
-        return withMultiAttach;
-    }
-    public void setWithMultiAttach(int withMultiAttach) {
-        this.withMultiAttach = withMultiAttach;
-    }
     public int getTotalSnapshots() {
         return totalSnapshots;
     }
@@ -170,6 +161,16 @@ public class AccountSummaryResult {
     }
     public void setSnapshotLimit(int snapshotLimit) {
         this.snapshotLimit = snapshotLimit;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountSummaryResult [project_id=" + project_id + ", totalSize=" + totalSize + ", totalVolumes="
+                + totalVolumes + ", stdVolumesGB=" + stdVolumesGB + ", ssdVolumesGB=" + ssdVolumesGB + ", stdVolumes="
+                + stdVolumes + ", ssdVolumes=" + ssdVolumes + ", encryptedVolumes=" + encryptedVolumes
+                + ", bootableVolumes=" + bootableVolumes + ", plaintextVolumes=" + plaintextVolumes
+                + ", totalSnapshots=" + totalSnapshots + ", volumeLimit=" + volumeLimit + ", gbLimit=" + gbLimit
+                + ", snapshotLimit=" + snapshotLimit + ", perVolumeGBLimit=" + perVolumeGBLimit + "]";
     }
 	
 	

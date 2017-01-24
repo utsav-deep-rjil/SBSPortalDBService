@@ -38,10 +38,10 @@ public class VolumeDaoImpl implements VolumeDao {
     public List<Volume> getAllVolumes(String search, String sortBy, String sortDirection, int offset, int limit,
             String filter, List<String> optionalParams) {
 
-        StringBuilder builder = new StringBuilder("select * from volumes v where v.deleted = 0");
+        StringBuilder builder = new StringBuilder(QueryTemplates.VOLUMES);
         if (optionalParams != null) {
             for (String condition : optionalParams) {
-                builder.append(" and v.").append(condition);
+                builder.append(" and (v.").append(condition).append(")");
             }
         }
         builder.append(" and v.").append(ServiceUtil.getColumnName(Volume.class, filter)).append(" like ?1");
@@ -58,11 +58,10 @@ public class VolumeDaoImpl implements VolumeDao {
 
     public ResultCount allVolumesResultCount(String search, String filter, List<String> optionalParams) {
 
-        StringBuilder builder = new StringBuilder(
-                "select count(*) as totalResults from volumes v where v.deleted = 0");
+        StringBuilder builder = new StringBuilder(QueryTemplates.VOLUMES_COUNT);
         if (optionalParams != null) {
             for (String condition : optionalParams) {
-                builder.append(" and v.").append(condition);
+                builder.append(" and (v.").append(condition).append(")");
             }
         }
         builder.append(" and v.").append(ServiceUtil.getColumnName(Volume.class, filter)).append(" like ?1");
