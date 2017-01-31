@@ -41,12 +41,12 @@ public class VolumeDaoImpl implements VolumeDao {
         StringBuilder builder = new StringBuilder(QueryTemplates.VOLUMES);
         if (optionalParams != null) {
             for (String condition : optionalParams) {
-                builder.append(" and (v.").append(condition).append(")");
+                builder.append(" and ").append(condition).append(")");
             }
         }
-        builder.append(" and v.").append(ServiceUtil.getColumnName(Volume.class, filter)).append(" like ?1");
+        builder.append(" and ").append(ServiceUtil.getColumnName(Volume.class, filter)).append(" like ?1");
         
-        builder.append(" ORDER BY v.").append(ServiceUtil.getColumnName(Volume.class, sortBy)).append(" ")
+        builder.append(" ORDER BY ").append(ServiceUtil.getColumnName(Volume.class, sortBy)).append(" ")
                 .append(sortDirection);
         
         Query query = EntityManagerSingleton.getInstance().createNativeQuery(builder.toString(), Volume.class);
