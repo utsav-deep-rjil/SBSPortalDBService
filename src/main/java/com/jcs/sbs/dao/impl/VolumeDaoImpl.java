@@ -28,8 +28,8 @@ public class VolumeDaoImpl implements VolumeDao {
 
     public ResultCount accountSummaryResultCount(String search, String filter) {
 
-        Query query = EntityManagerSingleton.getInstance().createNativeQuery(
-                String.format(QueryTemplates.ACCOUNT_SUMMARY_RESULTS, filter), ResultCount.class);
+        Query query = EntityManagerSingleton.getInstance()
+                .createNativeQuery(String.format(QueryTemplates.ACCOUNT_SUMMARY_RESULTS, filter), ResultCount.class);
         query.setParameter(1, search);
         List<ResultCount> queryResult = query.getResultList();
         return queryResult.get(0);
@@ -39,16 +39,16 @@ public class VolumeDaoImpl implements VolumeDao {
             String filter, List<String> optionalParams) {
 
         StringBuilder builder = new StringBuilder(QueryTemplates.VOLUMES);
+        builder.append(ServiceUtil.getColumnName(Volume.class, filter)).append(" like ?1");
         if (optionalParams != null) {
             for (String condition : optionalParams) {
-                builder.append(" and ").append(condition).append(")");
+                builder.append(" and v1.").append(condition).append(")");
             }
         }
-        builder.append(" and ").append(ServiceUtil.getColumnName(Volume.class, filter)).append(" like ?1");
-        
-        builder.append(" ORDER BY ").append(ServiceUtil.getColumnName(Volume.class, sortBy)).append(" ")
+
+        builder.append(" ORDER BY v1.").append(ServiceUtil.getColumnName(Volume.class, sortBy)).append(" ")
                 .append(sortDirection);
-        
+
         Query query = EntityManagerSingleton.getInstance().createNativeQuery(builder.toString(), Volume.class);
         query.setParameter(1, search);
         query.setFirstResult(offset);
@@ -59,18 +59,17 @@ public class VolumeDaoImpl implements VolumeDao {
     public ResultCount allVolumesResultCount(String search, String filter, List<String> optionalParams) {
 
         StringBuilder builder = new StringBuilder(QueryTemplates.VOLUMES_COUNT);
+        builder.append(ServiceUtil.getColumnName(Volume.class, filter)).append(" like ?1");
         if (optionalParams != null) {
             for (String condition : optionalParams) {
-                builder.append(" and (v.").append(condition).append(")");
+                builder.append(" and (v1.").append(condition).append(")");
             }
         }
-        builder.append(" and v.").append(ServiceUtil.getColumnName(Volume.class, filter)).append(" like ?1");
-        
 
         Query query = EntityManagerSingleton.getInstance().createNativeQuery(builder.toString(), ResultCount.class);
-        
+
         query.setParameter(1, search);
-        
+
         List<ResultCount> queryResult = query.getResultList();
         return queryResult.get(0);
     }

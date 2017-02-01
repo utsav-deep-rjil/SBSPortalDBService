@@ -28,11 +28,13 @@ public class QueryTemplates {
 
     public static final String ACCOUNT_SUMMARY_RESULTS = "select count(v.project_id) as totalResults from volumes v where v.deleted = 0 and v.%s like ?1";
 
-    public static final String VOLUMES = "select id,project_id,size,snapshot_id,status,bootable,encrypted,"
-            + "COALESCE((select vt.name from volume_types vt where vt.id=volume_type_id),'standard') as volume_type,"
-            + "created_at,updated_at,scheduled_at,launched_at,terminated_at from volumes where deleted = 0";
+    public static final String VOLUMES = "select * from (select v.id,v.project_id,v.size,v.snapshot_id,v.status,v.bootable,v.encrypted,"
+            + "(COALESCE((select vt.name from volume_types vt where vt.id=v.volume_type_id),'standard')) as volume_type,"
+            + "v.created_at,v.updated_at,v.scheduled_at,v.launched_at,v.terminated_at from volumes v where v.deleted = 0) v1 where v1.";
 
-    public static final String VOLUMES_COUNT = "select count(v.id) as totalResults from volumes v where v.deleted = 0";
+    public static final String VOLUMES_COUNT = "select count(v1.id) as totalResults from (select v.id,v.project_id,v.size,v.snapshot_id,v.status,v.bootable,v.encrypted,"
+            + "(COALESCE((select vt.name from volume_types vt where vt.id=v.volume_type_id),'standard')) as volume_type,"
+            + "v.created_at,v.updated_at,v.scheduled_at,v.launched_at,v.terminated_at from volumes v where v.deleted = 0) v1 where v1.";
 
     public static final String SNAPSHOTS = "select b.id,b.volume_id,b.project_id,b.size,b.status,b.encrypted,"
             + "b.fail_reason,b.created_at,b.updated_at from backups b where b.deleted = 0";
