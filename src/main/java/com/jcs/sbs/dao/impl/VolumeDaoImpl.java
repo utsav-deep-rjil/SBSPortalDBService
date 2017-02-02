@@ -42,7 +42,7 @@ public class VolumeDaoImpl implements VolumeDao {
         builder.append(ServiceUtil.getColumnName(Volume.class, filter)).append(" like ?1");
         if (optionalParams != null) {
             for (String condition : optionalParams) {
-                builder.append(" and v1.").append(condition).append(")");
+                builder.append(" and (v1.").append(condition).append(")");
             }
         }
 

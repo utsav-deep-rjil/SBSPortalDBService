@@ -15,7 +15,7 @@ public class AccountSummaryResult {
     private int ssdVolumes;
     private int encryptedVolumes;
     private int bootableVolumes;
-    private int storageVolumes;
+    private int userVolumes;
     private int plaintextVolumes;
     private int totalSnapshots;
     private int volumeLimit;
@@ -36,7 +36,7 @@ public class AccountSummaryResult {
     }
 
     public AccountSummaryResult(String project_id, int totalSize, int totalVolumes, int stdVolumesGB, int ssdVolumesGB,
-            int stdVolumes, int ssdVolumes, int encryptedVolumes, int bootableVolumes, int storageVolumes,
+            int stdVolumes, int ssdVolumes, int encryptedVolumes, int bootableVolumes, int userVolumes,
             int plaintextVolumes, int totalSnapshots, int volumeLimit, int gbLimit, int snapshotLimit,
             int perVolumeGBLimit) {
         super();
@@ -49,7 +49,7 @@ public class AccountSummaryResult {
         this.ssdVolumes = ssdVolumes;
         this.encryptedVolumes = encryptedVolumes;
         this.bootableVolumes = bootableVolumes;
-        this.storageVolumes = storageVolumes;
+        this.userVolumes = userVolumes;
         this.plaintextVolumes = plaintextVolumes;
         this.totalSnapshots = totalSnapshots;
         this.volumeLimit = volumeLimit;
@@ -75,7 +75,7 @@ public class AccountSummaryResult {
         this.gbLimit = that.gbLimit;
         this.snapshotLimit = that.snapshotLimit;
         this.perVolumeGBLimit = that.perVolumeGBLimit;
-        this.storageVolumes = that.storageVolumes;
+        this.userVolumes = that.userVolumes;
     }
 
     public String getProject_id() {
@@ -190,12 +190,12 @@ public class AccountSummaryResult {
         this.snapshotLimit = snapshotLimit;
     }
 
-    public int getStorageVolumes() {
-        return storageVolumes;
+    public int getUserVolumes() {
+        return userVolumes;
     }
 
-    public void setStorageVolumes(int storageVolumes) {
-        this.storageVolumes = storageVolumes;
+    public void setUserVolumes(int userVolumes) {
+        this.userVolumes = userVolumes;
     }
 
     @Override
@@ -203,7 +203,7 @@ public class AccountSummaryResult {
         return "AccountSummaryResult [project_id=" + project_id + ", totalSize=" + totalSize + ", totalVolumes="
                 + totalVolumes + ", stdVolumesGB=" + stdVolumesGB + ", ssdVolumesGB=" + ssdVolumesGB + ", stdVolumes="
                 + stdVolumes + ", ssdVolumes=" + ssdVolumes + ", encryptedVolumes=" + encryptedVolumes
-                + ", bootableVolumes=" + bootableVolumes + ", storageVolumes=" + storageVolumes + ", plaintextVolumes="
+                + ", bootableVolumes=" + bootableVolumes + ", userVolumes=" + userVolumes + ", plaintextVolumes="
                 + plaintextVolumes + ", totalSnapshots=" + totalSnapshots + ", volumeLimit=" + volumeLimit
                 + ", gbLimit=" + gbLimit + ", snapshotLimit=" + snapshotLimit + ", perVolumeGBLimit=" + perVolumeGBLimit
                 + "]";
