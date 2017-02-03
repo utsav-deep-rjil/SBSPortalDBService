@@ -28,7 +28,9 @@ public class AccountServiceImpl implements CommonService {
         Map<String, AccountType> mappdedAccount = ExcelReader.getExcelAccountType();
         List<AccountSummaryExtended> extendedResult = new ArrayList<AccountSummaryExtended>();
         for (AccountSummaryResult accountSummary : queryResult) {
-            AccountType accountType = mappdedAccount.get(ServiceUtil.removeLeadingZeroes(accountSummary.getProject_id()));
+            AccountType accountType = mappdedAccount.get(
+                    ServiceUtil.removeLeadingZeroes(
+                            accountSummary.getProject_id()));
             if (accountType == null) {
                 accountType = new AccountType();
                 accountType.setBillingType("Internal");

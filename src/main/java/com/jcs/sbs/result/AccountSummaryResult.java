@@ -1,11 +1,13 @@
 package com.jcs.sbs.result;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 public class AccountSummaryResult {
     @Id
+    @Column(name="project_id")
     private String project_id;
     private int totalSize;
     private int totalVolumes;

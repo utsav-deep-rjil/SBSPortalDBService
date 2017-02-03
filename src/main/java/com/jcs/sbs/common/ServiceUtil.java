@@ -26,6 +26,9 @@ public class ServiceUtil {
     };
 
     public static String removeLeadingZeroes(String str) {
+        if(str == null){
+            return null;
+        }
         int leadingZeroes;
         for (leadingZeroes = 0; leadingZeroes < str.length() && str.charAt(leadingZeroes) == '0'; leadingZeroes++)
             ;
