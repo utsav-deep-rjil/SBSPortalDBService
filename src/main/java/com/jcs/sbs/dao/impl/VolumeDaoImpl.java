@@ -1,7 +1,6 @@
 package com.jcs.sbs.dao.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Query;
 
@@ -9,7 +8,6 @@ import com.jcs.sbs.common.EntityManagerSingleton;
 import com.jcs.sbs.common.QueryTemplates;
 import com.jcs.sbs.common.ServiceUtil;
 import com.jcs.sbs.dao.VolumeDao;
-import com.jcs.sbs.models.Snapshot;
 import com.jcs.sbs.models.Volume;
 import com.jcs.sbs.result.AccountSummaryResult;
 import com.jcs.sbs.result.ResultCount;
@@ -18,7 +16,12 @@ public class VolumeDaoImpl implements VolumeDao {
 
     public List<AccountSummaryResult> getAccountSummary(String search, String sortBy, String sortDirection, int offset,
             int limit, String filter) {
-
+        if(filter.equals("project_id")){
+            filter="A.project_id";
+        }
+        if(sortBy.equals("project_id")){
+            sortBy="A.project_id";
+        }
         Query query = EntityManagerSingleton.getInstance().createNativeQuery(
                 String.format(QueryTemplates.ACCOUNT_SUMMARY, filter, sortBy, sortDirection, offset, limit),
                 AccountSummaryResult.class);
@@ -27,7 +30,9 @@ public class VolumeDaoImpl implements VolumeDao {
     }
 
     public ResultCount accountSummaryResultCount(String search, String filter) {
-
+        if(filter.equals("project_id")){
+            filter="A.project_id";
+        }
         Query query = EntityManagerSingleton.getInstance()
                 .createNativeQuery(String.format(QueryTemplates.ACCOUNT_SUMMARY_RESULTS, filter), ResultCount.class);
         query.setParameter(1, search);

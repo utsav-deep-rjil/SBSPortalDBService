@@ -1,5 +1,7 @@
 package com.jcs.sbs.common;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +25,7 @@ public class ExcelReader {
         }
         result = new HashMap<String, AccountType>();
         try {
-            InputStream file = ExcelReader.class.getClassLoader().getResourceAsStream("Production_Accounts_PMs.xlsx");
+            InputStream file = new FileInputStream(new File(System.getenv("PRODUCTION_ACCOUNTS_XLSX")));
 
             // Create Workbook instance holding reference to .xlsx file
             XSSFWorkbook workbook = new XSSFWorkbook(file);
